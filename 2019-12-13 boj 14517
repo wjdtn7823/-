@@ -1,0 +1,40 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+char str[1001];
+bool dp[1001][1001];
+
+int main() {
+	
+	scanf("%s", str);
+
+	int len = strlen(str);
+	int ans = 0;
+  
+	for (int i = 0; i < len; i++) {
+		dp[i][i] = true;
+		if (str[i] == str[i + 1]) {
+			dp[i][i + 1] = true;
+			ans = (ans + 1) % 10007;
+		}
+		ans = (ans + 1) % 10007;
+	}
+
+	for (int i = 2; i < len; i++) {
+		for (int j = 0; j < len-i; j++) {
+			int k = j + i;
+			if (k >= len) break;
+	
+
+			if (dp[j+1][k-1] && str[j]==str[k]) {
+				//printf("j=%d k=%d\n", j, k);
+				dp[j][k] = true;
+				ans = (ans + 1) % 10007;
+			}
+		}
+	}
+
+	printf("%d\n", ans);
+
+}
